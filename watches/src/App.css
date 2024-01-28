@@ -1,6 +1,7 @@
 .data-field {
   display: flex;
 }
+
 .input-box {
   position: relative;
   margin-right: 20px;
@@ -13,6 +14,3 @@
   background: #fff;
   padding: 0 5px;
 }
-
-/* .data-field_input {
-} */
