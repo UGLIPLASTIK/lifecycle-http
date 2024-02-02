@@ -1,5 +1,6 @@
 .data-field {
   display: flex;
+  margin-bottom: 20px;
 }
 
 .input-box {
@@ -11,6 +12,112 @@
   position: absolute;
   top: -20px;
   left: 10px;
-  background: #fff;
   padding: 0 5px;
+}
+
+.watches {
+  display: flex;
+}
+
+.watch {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border: 2px solid black;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.arrows {
+  position: absolute;
+  bottom: 83%;
+  right: 83%;
+}
+
+.hour-arrow {
+  position: absolute;
+  width: 4px;
+  height: 28px;
+  left: 50px;
+  top: 20px;
+  background: #000000;
+  animation: now 43200s infinite;
+  transform-origin: 0 29px;
+}
+
+.minute-arrow {
+  position: absolute;
+  width: 3px; 
+  height: 35px;
+  left: 51px;
+  top: 16px;
+  background: #000000;
+  animation: now 3600s infinite;
+  transform-origin: 0 34px; 
+}
+
+.second-arrow {
+  position: absolute;
+  width: 2px;
+  height: 45px;
+  left: 51px;
+  top: 7px;
+  background: #000000;
+  animation: nev 60s infinite steps(60);
+  transform-origin: 0 45px;
+}
+
+.sentr { 
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  top: 42px;
+  left: 45px;
+  background: #000000;
+}
+
+@keyframes nev {
+    100%{
+    transform: rotate(360deg); /* Стрелка делает полный круг */
+    }
+  }
+  
+@keyframes nov {
+  100%{
+  transform: rotate(360deg);
+  }
+}
+
+@keyframes now {
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
+.one, .three, .six, .nine {
+  position: absolute;
+  font-weight: bold;
+  font-size: 18px;
+  color: #48d1cc;
+}
+
+.one {
+  top: -15px;
+  left: 41px;
+}
+  
+.three {
+  top: 43px;
+  left: 100px;
+}
+
+.six {
+  top: 91px;
+  left: 46px;
+}
+  
+.nine {
+  top: 43px;
+  left: -8px;
 }

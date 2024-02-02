@@ -1,6 +1,11 @@
-const Watches = () => {
+import { ReactNode } from "react";
+
+
+const Watches = ({ children }: { children: ReactNode}) => {
   return (
-    <div></div>
+    <div className="watches">
+      {children}
+    </div>
   )
 }
 

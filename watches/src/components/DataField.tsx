@@ -3,9 +3,10 @@ type PropsTypes = {
   setInputName(e: React.ChangeEvent<HTMLInputElement>): void,
   inputTime: string,
   setInputTime(e: React.ChangeEvent<HTMLInputElement>): void,
+  addWatch(e: React.MouseEvent<HTMLButtonElement>): void,
 }
 
-const DataField = ({ inputName, setInputName, inputTime, setInputTime }: PropsTypes) => {
+const DataField = ({ inputName, setInputName, inputTime, setInputTime, addWatch }: PropsTypes) => {
 
   return (
     <div className="data-field">
@@ -21,7 +22,7 @@ const DataField = ({ inputName, setInputName, inputTime, setInputTime }: PropsTy
         </label>
         <input id="time"  className="data-field_input" type="text" onChange={setInputTime} value={inputTime}/>
       </div>
-      <button>Добавить</button>
+      <button onClick={addWatch}>Добавить</button>
     </div>
   )
 }
