@@ -1,16 +1,8 @@
 import './App.css'
+import Watches from './components/Watches'
 
-class App extends React.Component {
-  constructor(props){
-    super(props);
-    
-  }
+function App() {
+  return <Watches/>
 }
-// function App() {
-//   return (
-//     <>
-//     </>
-//   )
-// }
 
 export default App
