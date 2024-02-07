@@ -1,0 +1,38 @@
+.data-field {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.input-box {
+  position: relative;
+  margin-right: 20px;
+}
+
+.input-group-label {
+  position: absolute;
+  top: -20px;
+  left: 10px;
+  padding: 0 5px;
+}
+
+.clock-container {
+  display: flex;
+}
+
+.watch {
+  margin-right: 30px;
+  position: relative;
+}
+
+.delete-btn {
+  width: 15px;
+  height: 15px;
+  border: none;
+  background: url(/src/assets/delete.svg) rgba(255, 255, 255, 0);
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  right: -17px;
+  top: 2px;
+  cursor: pointer;
+}

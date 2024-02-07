@@ -8,6 +8,7 @@ class Clock extends React.Component {
     this.state = {
       localTime: undefined,
       time: undefined,
+      name: undefined,
     }
   }
 
@@ -15,30 +16,35 @@ class Clock extends React.Component {
     this.getTime()
   }
 
+  componentWillUnmount() {
+    this.interval = clearInterval(this.interval);
+  }
+
   getTime = () => {
     this.setState({
       localTime: this.props.timeZone,
       time: moment().format('h:mm:ss'),
+      name: this.props.name,
     })
     this.interval = setInterval(() => this.setState({
       time: moment().add(this.state.localTime, 'hours').format('h:mm:ss'),
     }), 1000)
   }
 
-  // infoBtn = () => {
-  //   console.log(this.state)
-  // }
-
   render() {
     return (
       <>
-        <div>{this.state.time}</div>
-        {/* <button onClick={this.infoBtn}>Info</button> */}
+        <div className="watch">
+          <button onClick={this.props.deleteClock} className="delete-btn"></button>
+          <div className="name">{this.state.name}</div>
+          <div>{this.state.time}</div>
+        </div>
       </>
-
     )
   }
 }
+
+
 class Watches extends React.Component {
   constructor(props) {
     super(props)
@@ -49,14 +55,33 @@ class Watches extends React.Component {
     this.interval = undefined;
   }
 
-  inputOnChange = (e) => {
+  inputTimeOnChange = (e) => {
     this.setState({
       timeZone: e.target.value,
     })
   }
 
-  addTimeButton = () => {
-    const newArr = this.state.clocksArr.concat(moment().format('h:mm:ss'))
+  inputNameOnChange = (e) => {
+    this.setState({
+      name: e.target.value,
+    })
+  }
+
+  addTimeButton = (e) => {
+    e.preventDefault()
+    const newArr = this.state.clocksArr.concat({name: this.state.name, time: moment().format('h:mm:ss')})
+    this.setState({
+      clocksArr: newArr,
+      name: "",
+    })
+  }
+
+  deleteClock = (e) => {
+    const findItem = e.target.closest('div');
+    const findName = findItem.querySelector('.name').textContent;
+    const newArr = this.state.clocksArr.filter((e) => {
+      return e.name != findName;
+    })
     this.setState({
       clocksArr: newArr,
     })
@@ -65,11 +90,25 @@ class Watches extends React.Component {
   render() {
     return (
       <>
-        <div>Время</div>
-        <input type="text"
-                onChange={this.inputOnChange}/>
-        <button onClick={this.addTimeButton}>Добавить</button>
-        <div>{this.state.clocksArr.map(item => <Clock timeZone = {this.state.timeZone} key={this.state.clocksArr.indexOf(item)} time={item}/>)}</div>
+        <form className="data-field">
+          <div className="input-box">
+            <label className="input-group-label" htmlFor="name">Название</label>
+            <input type="text"
+                   id="name"
+                  //  value={this.state.name}
+                   onChange={this.inputNameOnChange}/>
+          </div>
+          <div className="input-box">
+            <label className="input-group-label" htmlFor="time">Время</label>
+            <input type="number"
+                  //  value={this.state.timeZone}
+                   id="time"
+                   onChange={this.inputTimeOnChange}/>
+          </div>
+          <button onClick={this.addTimeButton}>Добавить</button>
+        </form>     
+        
+        <div className="clock-container">{this.state.clocksArr.map(item => <Clock name = {item.name} timeZone = {this.state.timeZone} deleteClock = {this.deleteClock} key={this.state.clocksArr.indexOf(item)} time={item.time}/>)}</div>
       </>
     )
   }
