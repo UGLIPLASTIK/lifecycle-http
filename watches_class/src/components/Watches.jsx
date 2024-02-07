@@ -1,49 +1,6 @@
 import React from "react";
 import moment from "moment";
-
-class Clock extends React.Component {
-  constructor (props) {
-    super(props)
-    this.interval = undefined;
-    this.state = {
-      localTime: undefined,
-      time: undefined,
-      name: undefined,
-    }
-  }
-
-  componentDidMount() {
-    this.getTime()
-  }
-
-  componentWillUnmount() {
-    this.interval = clearInterval(this.interval);
-  }
-
-  getTime = () => {
-    this.setState({
-      localTime: this.props.timeZone,
-      time: moment().format('h:mm:ss'),
-      name: this.props.name,
-    })
-    this.interval = setInterval(() => this.setState({
-      time: moment().add(this.state.localTime, 'hours').format('h:mm:ss'),
-    }), 1000)
-  }
-
-  render() {
-    return (
-      <>
-        <div className="watch">
-          <button onClick={this.props.deleteClock} className="delete-btn"></button>
-          <div className="name">{this.state.name}</div>
-          <div>{this.state.time}</div>
-        </div>
-      </>
-    )
-  }
-}
-
+import Clock from "./clock";
 
 class Watches extends React.Component {
   constructor(props) {
@@ -69,7 +26,7 @@ class Watches extends React.Component {
 
   addTimeButton = (e) => {
     e.preventDefault()
-    const newArr = this.state.clocksArr.concat({name: this.state.name, time: moment().format('h:mm:ss')})
+    const newArr = this.state.clocksArr.concat({name: this.state.name, time: moment().format('HH:mm:ss')})
     this.setState({
       clocksArr: newArr,
       name: "",
@@ -85,6 +42,11 @@ class Watches extends React.Component {
     this.setState({
       clocksArr: newArr,
     })
+  }
+  
+  test = (e) => {
+    e.preventDefault()
+    console.log(moment().utc().add(12, 'hours').format('HH:mm:ss'))
   }
 
   render() {
@@ -106,6 +68,7 @@ class Watches extends React.Component {
                    onChange={this.inputTimeOnChange}/>
           </div>
           <button onClick={this.addTimeButton}>Добавить</button>
+          <button onClick={this.test}>test</button>
         </form>     
         
         <div className="clock-container">{this.state.clocksArr.map(item => <Clock name = {item.name} timeZone = {this.state.timeZone} deleteClock = {this.deleteClock} key={this.state.clocksArr.indexOf(item)} time={item.time}/>)}</div>
