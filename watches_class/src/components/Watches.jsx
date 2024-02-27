@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import Clock from "./clock";
+import Clock from "./Clock";
 
 class Watches extends React.Component {
   constructor(props) {
@@ -43,11 +43,6 @@ class Watches extends React.Component {
       clocksArr: newArr,
     })
   }
-  
-  test = (e) => {
-    e.preventDefault()
-    console.log(moment().utc().add(12, 'hours').format('HH:mm:ss'))
-  }
 
   render() {
     return (
@@ -57,18 +52,15 @@ class Watches extends React.Component {
             <label className="input-group-label" htmlFor="name">Название</label>
             <input type="text"
                    id="name"
-                  //  value={this.state.name}
                    onChange={this.inputNameOnChange}/>
           </div>
           <div className="input-box">
             <label className="input-group-label" htmlFor="time">Время</label>
             <input type="number"
-                  //  value={this.state.timeZone}
                    id="time"
                    onChange={this.inputTimeOnChange}/>
           </div>
           <button onClick={this.addTimeButton}>Добавить</button>
-          <button onClick={this.test}>test</button>
         </form>     
         
         <div className="clock-container">{this.state.clocksArr.map(item => <Clock name = {item.name} timeZone = {this.state.timeZone} deleteClock = {this.deleteClock} key={this.state.clocksArr.indexOf(item)} time={item.time}/>)}</div>
