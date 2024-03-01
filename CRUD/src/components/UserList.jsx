@@ -13,14 +13,15 @@ class UserList extends React.Component {
     }
   }
 
-  sendRequest = (method, url) => {
+  sendRequest = (method, url, body = null) => {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open(method, url);
       xhr.responseType = 'json';
+      if (method == 'POST') xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.onload = () => {
         if (xhr.status >= 400) {
-          reject(xhr.response)
+         reject(xhr.response)
         } else {
           resolve(xhr.response)
         }
@@ -28,8 +29,8 @@ class UserList extends React.Component {
       xhr.onerror = () => {
         reject(xhr.response);
       }
-  
-      xhr.send()
+      if (method == 'POST') xhr.send(JSON.stringify(body))
+      xhr.send(body)
     })
   }
 
@@ -44,11 +45,20 @@ class UserList extends React.Component {
   }
 
   componentDidUpdate() {
-    
+    // this.sendRequest('GET', testUrl)
+    //   .then(data => {
+    //     this.setState({
+    //       posts: data,
+    //     })
+    //   })
+    //   .catch(err => console.log(err))
   }
 
   addFunc = (e) => {
     e.preventDefault();
+    this.sendRequest('POST', testUrl, {text: this.state.text})
+      .then(data => console.log(JSON.stringify(data)))
+      .catch(err => console.log(err))
   }
 
   deleteFunc = () => {
