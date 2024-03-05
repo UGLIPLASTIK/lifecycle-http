@@ -21,7 +21,7 @@ class UserList extends React.Component {
       if (method == 'POST') xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.onload = () => {
         if (xhr.status >= 400) {
-         reject(xhr.response)
+          reject(xhr.response)
         } else {
           resolve(xhr.response)
         }
@@ -29,8 +29,8 @@ class UserList extends React.Component {
       xhr.onerror = () => {
         reject(xhr.response);
       }
-      if (method == 'POST') xhr.send(JSON.stringify(body))
-      xhr.send(body)
+      // if (method == 'POST') xhr.send(JSON.stringify(body))
+      xhr.send(JSON.stringify(body))
     })
   }
 
