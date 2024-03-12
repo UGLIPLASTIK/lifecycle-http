@@ -13,34 +13,17 @@ class UserList extends React.Component {
     }
   }
 
-  sendRequest = (method, url, body = null) => {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open(method, url);
-      xhr.responseType = 'json';
-      if (method == 'POST') xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onload = () => {
-        if (xhr.status >= 400) {
-          reject(xhr.response)
-        } else {
-          resolve(xhr.response)
-        }
-      }
-      xhr.onerror = () => {
-        reject(xhr.response);
-      }
-      // if (method == 'POST') xhr.send(JSON.stringify(body))
-      xhr.send(JSON.stringify(body))
+  sendRequest = (url) => {
+    return fetch(url).then(response => {
+      return response.json()
     })
   }
 
   componentDidMount() {
-    this.sendRequest('GET', testUrl)
-      .then(data => {
-        this.setState({
-          posts: data,
-        })
-      })
+    this.sendRequest(testUrl)
+      .then(data => this.setState({
+        posts: data
+      }))
       .catch(err => console.log(err))
   }
 
