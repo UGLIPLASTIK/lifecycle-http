@@ -29,6 +29,9 @@ class TODOList extends React.Component {
   }
 
   componentDidMount() {
+    // this.sendRequest('GET', testUrl)
+    // .then(data => console.log(data))
+    // .catch(err => console.log(err))
     this.sendRequest('GET', testUrl)
       .then(data => this.setState({
         posts: data
@@ -51,7 +54,9 @@ class TODOList extends React.Component {
 
   deleteFunc = (e) => {
     e.preventDefault();
-    this.sendRequest('DELETE', `${testUrl}/${e.target.id}`);
+    fetch(`${testUrl}/${e.target.id}`, {
+      method: 'delete',
+    })
 
     this.sendRequest('GET', testUrl)
     .then(data => this.setState({
@@ -61,6 +66,7 @@ class TODOList extends React.Component {
   }
 
   textareaOnCange = (e) => {
+    console.log(this.state.text)
     const { target } = e;
     this.setState({
       text: target.value,
