@@ -15,16 +15,15 @@ class TODOList extends React.Component {
   }
 
   sendRequest = (method, url, body = null) => {
-    const headers = {
-      'Content-Type': 'application/json'
-    };
     if (method == 'GET') return fetch(url).then(response => {
       return response.json();
     })
     else return fetch(url, {
       method: method,
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(body),
-      headers: headers
     }).then(response => {
       if (response.ok) {
         return response.json();
@@ -51,15 +50,31 @@ class TODOList extends React.Component {
   
   addFunc = (e) => {
     e.preventDefault();
-    this.sendRequest('POST', testUrl, {text: this.state.text})
-      .then(data => console.log(data))
-      .catch(err => console.log(err));
+    const newData = {
+      text: this.state.text
+    }
+    fetch(testUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newData),
+    }).then(res => {
+      if (!res.ok) {
+        console.log('Ошибка')
+        return
+      }
+      return res.json()
+    })
+    // this.sendRequest('POST', testUrl, {text: this.state.text})
+    //   .then(data => console.log(data))
+    //   .catch(err => console.log("ОШИБКА" + err));
     
     this.sendRequest('GET', testUrl)
-    .then(data => this.setState({
-      posts: data,
-    }))
-    .catch(err => console.log(err))
+      .then(data => this.setState({
+        posts: data,
+      }))
+      .catch(err => console.log(err))
   }
 
   deleteFunc = (e) => {
@@ -76,7 +91,6 @@ class TODOList extends React.Component {
   }
 
   textareaOnCange = (e) => {
-    console.log(this.state.text)
     this.setState({
       text: e.target.value,
     })
