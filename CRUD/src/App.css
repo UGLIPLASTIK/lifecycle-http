@@ -1,16 +1,28 @@
 .main-container {
   display: flex;
+  margin: 30px 50px;
 }
-.user-container {
+
+.head-container {
+  display: flex;
+}
+
+h1 {
+  margin: 0 20px 0 0;
+}
+
+.users-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  width: 70vw;
+  justify-content: flex-start;
+  margin: 20px 0 0 0;
+  width: 60vw;
 }
 
 .user-card {
   display: flex;
   width: 25vw;
+  height: 100px;
   padding: 12px;
   margin: 0 20px 20px 0;
   border: 2px solid;
@@ -37,9 +49,10 @@ textarea {
 }
 
 .delete-btn {
-  right: 15px;
-  width: 25px;
-  height: 25px;
+  top: 2px;
+  right: 0px;
+  width: 15px;
+  height: 15px;
   background: center / contain no-repeat url(https://cdn.icon-icons.com/icons2/1520/PNG/512/crossflat_105968.png);
 }
 
@@ -50,5 +63,11 @@ textarea {
   right: 50px;
   background: center / contain no-repeat url(https://cdn.icon-icons.com/icons2/218/PNG/512/Download_25378.png);
   transform: rotate(270deg);
+}
+
+.update-btn {
+  width: 30px;
+  position: static;
+  background: center / contain no-repeat url(https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Reload_icon_-_Green.svg/1024px-Reload_icon_-_Green.svg.png);
 }
 

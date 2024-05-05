@@ -24,15 +24,6 @@ class TODOList extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(body),
-    }).then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      return response.json().then(error => {
-        const e = new Error("Что то не так: " + error);
-        e.data = error;
-        throw e
-      })
     })
   }
 
@@ -47,47 +38,35 @@ class TODOList extends React.Component {
         error
       }))
   }
-  
-  addFunc = (e) => {
-    e.preventDefault();
-    const newData = {
-      text: this.state.text
-    }
-    fetch(testUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newData),
-    }).then(res => {
-      if (!res.ok) {
-        console.log('Ошибка')
-        return
-      }
-      return res.json()
-    })
-    // this.sendRequest('POST', testUrl, {text: this.state.text})
-    //   .then(data => console.log(data))
-    //   .catch(err => console.log("ОШИБКА" + err));
-    
-    this.sendRequest('GET', testUrl)
+
+  addFunc = async () => {
+    await this.sendRequest('POST', testUrl, {text: this.state.text})
+
+    await this.sendRequest('GET', testUrl)
       .then(data => this.setState({
         posts: data,
+        isLoaded: true,
       }))
-      .catch(err => console.log(err))
   }
 
-  deleteFunc = (e) => {
-    e.preventDefault();
-    fetch(`${testUrl}/${e.target.id}`, {
+  deleteFunc = async (e) => {
+    await fetch(`${testUrl}/${e.target.id}`, {
       method: 'delete',
     })
     
-    this.sendRequest('GET', testUrl)
+    await this.sendRequest('GET', testUrl)
       .then(data => this.setState({
         posts: data
       }))
       .catch(err => console.log(err))
+  }
+
+  updateFunc = () => {
+    this.sendRequest('GET', testUrl)
+      .then(data => this.setState({
+        posts: data,
+        isLoaded: true,
+      }))
   }
 
   textareaOnCange = (e) => {
@@ -104,8 +83,15 @@ class TODOList extends React.Component {
       return <div>Загрузка...</div>
     } else return (
       <div className="main-container">
-        <div className="user-container">
-          {posts.map((post) => <TODO key={post.id} delOnClick={this.deleteFunc} post={post}/>)}
+        <div>
+          <div className="head-container">
+            <h1>NOTES</h1>
+            <button onClick={this.updateFunc} className="update-btn btn"></button>
+          </div>
+
+          <div className="users-container">
+            {posts.map((post) => <TODO key={post.id} delOnClick={this.deleteFunc} post={post}/>)}
+          </div>
         </div>
         <form>
           <textarea value={text} onChange={this.textareaOnCange} name="" id="" cols="30" rows="10"></textarea>
